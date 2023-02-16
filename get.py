@@ -43,9 +43,10 @@ def get_and_save(cid):
 		s = bs(res.text, 'lxml')
 		p = s.select('#main-container > div.row > div:nth-child(2) > div > table > tbody > tr > td:nth-child(1) > a')
 		for i in p:
-			pid = i.get_text().strip().lower()
 			lk = i.get('href')
-			save(cid, pid, get(cid, pid, 'https://atcoder.jp' + lk))
+			tmp = lk.split('/')
+			rcid, pid = tmp[2], tmp[4].split('_')[-1]
+			save(rcid, pid, get(rcid, pid, 'https://atcoder.jp' + lk))
 	except Exception as e:
 		print(f'Error {e}')
 t, l, r = input('Type & From ?~?: ').split()
